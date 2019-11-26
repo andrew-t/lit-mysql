@@ -1,0 +1,8 @@
+node_modules
+
+# advanced tests that rely on access to my database
+# which I am not going to open source (not sorry)
+test/secret.js
+
+# contains credentials:
+test/creds.json

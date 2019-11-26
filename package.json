@@ -1,0 +1,16 @@
+{
+  "name": "lit-mysql",
+  "version": "0.0.1",
+  "description": "A simple library for writing human-readable but secure MySQL queries",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Andrew Taylor <andrew@andrewt.net>",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^6.2.2",
+    "mysql": "^2.17.1"
+  }
+}
