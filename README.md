@@ -2,7 +2,9 @@
 
 A dead simple way to make safe MySQL calls using template literals.
 
-One hundred lines. No build process, no dependenices (although you will need a [mysql](https://www.npmjs.com/package/mysql)-compatible connection object since this is not a MySQL library; merely a nice interface wrapper).
+```sh
+npm i lit-mysql
+```
 
 ## Aims
 
@@ -24,6 +26,8 @@ const [ user ] = await sql`SELECT * FROM users WHERE id = ${ id }`;
 conn.end();
 ```
 
+The `withDb` function here creates a `sql` function that turns string literals into Promises, which will resolve with data from your database, or reject with a SQL error.
+
 You can also nest queries if you need to build advanced uses:
 
 ```js
@@ -32,10 +36,12 @@ const { q } = require('lit-mysql');
 let query = q`SELECT * FROM users`;
 
 if (filter) query = q`${query} WHERE name LIKE ${ filter }`;
-if (direction) query = q`${query} SORT id ${ direction }`;
+if (direction) query = q`${query} SORT BY id ${ direction }`;
 
 const users = await query.run(db);
 ```
+
+Notice here we use the `q` function, which is like the generated `sql` one except that it doesn't hit the database until you call `.run(db)`.
 
 Lastly there are helper methods to generate mini-queries, so you can use the nesting to simplify otherwise ugly SQL syntax:
 
@@ -74,6 +80,10 @@ await sql`SELECT * FROM users WHERE ${whereList({
 ```
 
 just in case they're of use.
+
+## Other included files
+
+There's also a `Query` class used internally which you might find useful, especially if you want to write your own helper functions.
 
 ## Testing
 

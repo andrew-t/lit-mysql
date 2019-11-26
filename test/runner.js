@@ -25,6 +25,7 @@ describe('query runner', () => {
 			sqlParts: [ '', ' WHERE 2 = ', '' ],
 			params: [ q1, 2 ]
 		});
+		// All this whitespace is movable but I didn't fancy writing a test to handle that. Maybe one day.
 		assert.deepEqual([ ' SELECT ', ' AS one  WHERE 2 = ', '' ], q2.sqlParts);
 		assert.deepEqual([ 1, 2 ], q2.params);
 	});
