@@ -22,16 +22,34 @@ class Query {
 		}
 	}
 
+	get query() {
+		return this.sqlParts.join('?');
+	}
+
 	// Safely runs the query.
 	run(db) {
-		return new Promise((resolve, reject) =>
-			db.query(
-				this.sqlParts.join('?'),
-				this.params,
-				(error, results, fields) => {
-					if (error) reject(error);
-					else resolve(results);
-				}));
+		if (db.query) {
+			// Assume it's MySQL
+			return new Promise((resolve, reject) =>
+				db.query(
+					this.query,
+					this.params,
+					(error, results, fields) => {
+						if (error) reject(error);
+						else resolve(results);
+					}));
+		}
+		if (db.Database) {
+			// Assume it's SQLite
+			return new Promise((resolve, reject) =>
+				db.run(
+					this.query,
+					this.params,
+					(error, results, fields) => {
+						if (error) reject(error);
+						else resolve(results);
+					}));
+		}
 	}
 
 	// Generates a text encoding of the query for logging etc.

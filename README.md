@@ -26,6 +26,26 @@ const [ user ] = await sql`SELECT * FROM users WHERE id = ${ id }`;
 conn.end();
 ```
 
+## Other DB Engines
+
+This should work out of the box with `sqlite3` as a databse. If you want to use it with Sequelize you'll probably need a little manual step so you can pass in the extra details it needs:
+
+```js
+const { q } = require('lit-mysql');
+
+const { query, params } = q`SELECT * FROM users WHERE id = ${ id }`;
+
+const user = await sequelize.query(
+	query,
+	{
+		replacements: params,
+		type: QueryTypes.SELECT,
+		model: User
+	});
+```
+
+## Details
+
 The `withDb` function here creates a `sql` function that turns string literals into Promises, which will resolve with data from your database, or reject with a SQL error.
 
 You can also nest queries if you need to build advanced uses:

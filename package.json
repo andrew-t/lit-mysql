@@ -1,6 +1,6 @@
 {
   "name": "lit-mysql",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A simple library for writing human-readable but secure MySQL queries",
   "main": "index.js",
   "scripts": {
